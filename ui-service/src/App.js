@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import { Header } from './component/header';
+import { ConnectedHeader } from './component/header';
 import { ConnectedLogin } from './component/login';
 
 class App extends Component {
@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="container-fluid App">
         <div className="row mb-5">
-          <Header />
+          <ConnectedHeader />
         </div>
         <div className="row p-2">
         <ConnectedLogin />

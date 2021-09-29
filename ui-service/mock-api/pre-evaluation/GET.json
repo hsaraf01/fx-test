@@ -1,0 +1,29 @@
+[
+    {
+        "question": "What is my name",
+        "options": [
+            "Himanshu",
+            "Ambica",
+            "Mudit",
+            "Uma"
+        ]
+    },
+    {
+        "question": "What is the age",
+        "options": [
+            "40",
+            "30",
+            "25",
+            "10"
+        ]
+    },
+    {
+        "question": "What is my profession",
+        "options": [
+            "Architect",
+            "Developer",
+            "Trainee",
+            "QA"
+        ]
+    }
+]

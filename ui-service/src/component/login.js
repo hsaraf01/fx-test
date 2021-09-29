@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { nameEntered } from "../redux/actions";
 import LoginForm from "./loginForm";
-import Welcome from "./welcome";
+import {ConnectedWelcome} from "./welcome";
 
 class Login extends Component {
 
@@ -27,11 +27,10 @@ class Login extends Component {
                     </div>
                     <div className="row">
                         {this.props.state.name &&
-                            <Welcome name={this.props.state.name} />
+                            <ConnectedWelcome name={this.props.state.name} />
                         }
                     </div>
                 </div>
-
             </>
         );
     }
