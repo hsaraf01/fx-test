@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import './App.css';
 import { ConnectedHeader } from './component/header';
 import { ConnectedLogin } from './component/login';
+import { Switch, Route } from 'react-router';
+import { ConnectedAdmin } from './component/admin';
 
 class App extends Component {
 
@@ -12,10 +14,20 @@ class App extends Component {
         <div className="row mb-5">
           <ConnectedHeader />
         </div>
-        <div className="row p-2">
-        <ConnectedLogin />
-      </div>
+        <Switch>
+          <Route exact path="/admin">
+            <div className="row p-2">
+              <ConnectedAdmin />
+            </div>
+          </Route>
+          <Route path="/">
+            <div className="row p-2">
+              <ConnectedLogin />
+            </div>
+          </Route>
+        </Switch>
       </div >
+
     )
   }
 }

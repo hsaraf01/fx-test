@@ -6,14 +6,13 @@ export default function PreEvaluation(props) {
         <>
             <form onSubmit={props.onPreEvaluationSubmitButtonClick}>
                 {props.preEvalQuestion.map((item, index) => {
-                    const radioId= "question"+index;
                     return (<Form.Group className="mt-2 ml-5">
                         <h1><span className="badge badge-info w-11" >{item.question}</span></h1>                        
                         {item.options.map((opt, index) => (
                                 <div className="form-check">
-                                    <input className="form-check-input" type="radio" name= {radioId} value={opt} />
+                                    <input className="form-check-input" type="radio" name= {item.id} value={opt.id} onChange={props.onPreEvalChange}/>
                                     <label className="form-check-label font-weight-bold">
-                                        {opt}
+                                        {opt.option}
                                     </label>
                                 </div>
                             )

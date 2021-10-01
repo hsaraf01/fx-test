@@ -10,11 +10,11 @@ export function Header(props) {
 
             </div>
             <div className="col-9 align-self-center mt-4">
-                <p className="h1 text-center"><Badge className="bg-light ">FX Test</Badge></p>
+                <p className="h1 text-center"><Badge className="bg-light ">{props.state.title}</Badge></p>
             </div>
             <div className="col-2 mt-4">
-                {props.state.name &&
-                    <div>Hello <p className="h5">{props.state.name}</p></div>
+                {props.state.selectedUser.name &&
+                    <div>Hello <p className="h5">{props.state.selectedUser.name}</p></div>
                 }
             </div>
         </>

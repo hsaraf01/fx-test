@@ -1,11 +1,4 @@
 
-export const nameEntered = (name) => {
-    return {
-        type:"NAME_ENTERED",
-        payload: name
-    }
-}
-
 export const preEvalClicked = (isClicked) => {
     return {
         type:"PRE_EVAL_CLICKED",
@@ -38,5 +31,26 @@ export const preEvalCompleted = (isCompleted) => {
     return {
         type:"PRE_EVAL_COMPLETED",
         payload: isCompleted
+    }
+}
+
+export const populateUsers = (users) => {
+    return {
+        type:"POPULATE_USERS",
+        payload: users
+    }
+}
+
+export const selectedUser = (userName) => {
+    return {
+        type:"SELECTED_USER",
+        payload: userName
+    }
+}
+
+export const populateTitle = (title) => {
+    return {
+        type:"POPULATE_TITLE",
+        payload: title
     }
 }

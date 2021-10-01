@@ -5,8 +5,11 @@ import { preEvalClicked, postEvalClicked, preEvalCompleted } from "../redux/acti
 import PreEvaluation from "./preEvaluation";
 import PostEvaluation from "./postEvaluation";
 import { postEvalQuestionActionCreator, preEvalQuestionActionCreator } from "../redux/actionCreators";
+import { submitPreEval } from "../async";
 
 export default function Welcome(props) {
+
+    var preEvalQuestionAnswers = [];
 
     const onPreEvaluationButtonClick = (event) => {
         event.preventDefault();
@@ -21,9 +24,27 @@ export default function Welcome(props) {
     }
 
     const onPreEvaluationSubmitButtonClick = (event) => {
+        event.preventDefault();       
+        console.log(props.state.selectedUser.id) 
+        const submission =  { 
+            "userId": props.state.selectedUser.id,
+            "questionAnswers" :preEvalQuestionAnswers
+        }
+        submitPreEval(submission).then(response =>props.dispatch(preEvalCompleted(true)))
+        
+    }
+
+    const onPreEvalChange = (event) => {
         event.preventDefault();
-        console.log(event.target.elements)
-        props.dispatch(preEvalCompleted(true));
+        const questionAnswer = {
+            "questionId": event.target.name,
+            "answerId": event.target.value
+        }
+
+        preEvalQuestionAnswers =  [
+            ...preEvalQuestionAnswers,
+            questionAnswer
+        ]
     }
 
     const onPostEvaluationSubmitButtonClick = (event) => {
@@ -40,7 +61,8 @@ export default function Welcome(props) {
                         <EvaluationButtons
                             onPreEvaluationButtonClick={onPreEvaluationButtonClick}
                             onPostEvaluationButtonClick={onPostEvaluationButtonClick}
-                            isPreEvalCompleted={props.state.isPreEvalCompleted} />
+                            isPreEvalCompleted={props.state.isPreEvalCompleted}
+                         />
                     </div>
                     <div className="col-2" />
                 </div>
@@ -48,7 +70,10 @@ export default function Welcome(props) {
             <div className="row">
                 {
                     props.state.isPreEvalClicked && !props.state.isPreEvalCompleted &&  
-                    <PreEvaluation preEvalQuestion={props.state.preEvalQuestion} onPreEvaluationSubmitButtonClick= {onPreEvaluationSubmitButtonClick}/>
+                    <PreEvaluation 
+                    preEvalQuestion={props.state.preEvalQuestion} 
+                    onPreEvaluationSubmitButtonClick= {onPreEvaluationSubmitButtonClick}
+                    onPreEvalChange={onPreEvalChange}/>
                 }
                 {
                     props.state.isPostEvalClicked &&

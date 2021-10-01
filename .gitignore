@@ -1,1 +1,4 @@
 .idea
+
+/server-service/target
+/server-service/server-service.iml
