@@ -15,14 +15,16 @@ export const heartbeatEventHandler = (event) => {
 }
 
 export const userLoggedInEventHandler = (event) => {
+    console.log(event)
     store.dispatch(userLoggedIn( JSON.parse(event.data)));
 }
 
 export const preEvalCompletedEventHandler = (event) => {
+    console.log(event)
     store.dispatch(preEvalScore(JSON.parse(event.data)));
 }
 
 export const postEvalCompletedEventHandler = (event) => {
-    console.log(event);
+    console.log(event)
     store.dispatch(postEvalScore(JSON.parse(event.data)));
 }

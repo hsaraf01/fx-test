@@ -11,7 +11,6 @@ class Login extends Component {
         event.preventDefault();
         this.props.dispatch(selectedUser(event.target[0].value))
         setTimeout(() => {
-            console.log(this.props.userState.selectedUser)
             userLoggedInRequest(this.props.userState.selectedUser);
         }, 5)
 

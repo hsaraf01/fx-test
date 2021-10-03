@@ -9,6 +9,7 @@ export const POST_EVAL_COMPLETED = "POST_EVAL_COMPLETED";
 export const EVAL_QUESTIONS = "EVAL_QUESTIONS";
 export const POST_EVAL_CLICKED = "POST_EVAL_CLICKED";
 export const PRE_EVAL_CLICKED = "PRE_EVAL_CLICKED";
+export const SELECTED_ADMIN_USER = "SELECTED_ADMIN_USER";
 
 export const URL = "http://localhost:8080"
 export const PRE_TYPE="PRE_EVAL"
