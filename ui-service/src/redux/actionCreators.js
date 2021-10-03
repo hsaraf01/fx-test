@@ -1,10 +1,10 @@
-import { fetchPostEvalQuestion, fetchPreEvalQuestion } from "../async";
-import { postEvalQuestions, preEvalQuestions } from "./actions"
+import { fetchPostEvalQuestion, fetchPreEvalQuestion } from "../service/async";
+import { evalQuestions } from "./actions"
 
 export const preEvalQuestionActionCreator = () => {
     return (dispatch) => {
         fetchPreEvalQuestion().then(response => {
-            dispatch(preEvalQuestions(response));
+            dispatch(evalQuestions(response));
         })
     }
 }
@@ -12,7 +12,7 @@ export const preEvalQuestionActionCreator = () => {
 export const postEvalQuestionActionCreator = () => {
     return (dispatch) => {
         fetchPostEvalQuestion().then(response => {
-            dispatch(postEvalQuestions(response));
+            dispatch(evalQuestions(response));
         })
     }
 

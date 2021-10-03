@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import EvaluationButtons from "./evaluationButtons";
-import { preEvalClicked, postEvalClicked, preEvalCompleted } from "../redux/actions";
-import PreEvaluation from "./preEvaluation";
-import PostEvaluation from "./postEvaluation";
+import { preEvalClicked, postEvalClicked, preEvalCompleted, postEvalCompleted } from "../redux/actions";
+import Evaluation from "./evaluation";
 import { postEvalQuestionActionCreator, preEvalQuestionActionCreator } from "../redux/actionCreators";
-import { submitPreEval } from "../async";
+import { submitPostEval, submitPreEval } from "../service/async";
+import { POST_TYPE, PRE_TYPE } from "../redux/constants";
 
 export default function Welcome(props) {
 
-    var preEvalQuestionAnswers = [];
+    var evalQuestionAnswers = [];
 
     const onPreEvaluationButtonClick = (event) => {
         event.preventDefault();
@@ -24,60 +24,70 @@ export default function Welcome(props) {
     }
 
     const onPreEvaluationSubmitButtonClick = (event) => {
-        event.preventDefault();       
-        console.log(props.state.selectedUser.id) 
-        const submission =  { 
-            "userId": props.state.selectedUser.id,
-            "questionAnswers" :preEvalQuestionAnswers
+        event.preventDefault();
+        const submission = {
+            "userId": props.userState.selectedUser.id,
+            "questionAnswers": evalQuestionAnswers
         }
-        submitPreEval(submission).then(response =>props.dispatch(preEvalCompleted(true)))
-        
+        submitPreEval(submission).then(response => props.dispatch(preEvalCompleted(true)))
     }
 
-    const onPreEvalChange = (event) => {
+    const onEvalChange = (event) => {
         event.preventDefault();
         const questionAnswer = {
             "questionId": event.target.name,
             "answerId": event.target.value
         }
-
-        preEvalQuestionAnswers =  [
-            ...preEvalQuestionAnswers,
+        evalQuestionAnswers = [
+            ...evalQuestionAnswers,
             questionAnswer
         ]
     }
 
     const onPostEvaluationSubmitButtonClick = (event) => {
         event.preventDefault();
-        
+        debugger;
+        const submission = {
+            "userId": props.userState.selectedUser.id,
+            "questionAnswers": evalQuestionAnswers
+        }
+        submitPostEval(submission).then(response => {
+            debugger;
+            props.dispatch(postEvalCompleted(true))
+        }
+        )
     }
 
     return (
         <div className="container-fluid workspace">
-            {((!props.state.isPreEvalClicked && !props.state.isPostEvalClicked) || props.state.isPreEvalCompleted) &&
+            {((!props.userState.isPreEvalClicked && !props.userState.isPostEvalClicked) || (props.userState.isPreEvalCompleted && props.userState.isPostEvalCompleted)) &&
                 <div className="row">
-                    <div className="col-5" />
-                    <div className="col-5">
+                    <div className="col-11 text-center">
                         <EvaluationButtons
                             onPreEvaluationButtonClick={onPreEvaluationButtonClick}
                             onPostEvaluationButtonClick={onPostEvaluationButtonClick}
-                            isPreEvalCompleted={props.state.isPreEvalCompleted}
-                         />
+                            isPreEvalCompleted={props.userState.isPreEvalCompleted}
+                            isPostEvalCompleted={props.userState.isPostEvalCompleted}
+                        />
                     </div>
-                    <div className="col-2" />
                 </div>
             }
             <div className="row">
                 {
-                    props.state.isPreEvalClicked && !props.state.isPreEvalCompleted &&  
-                    <PreEvaluation 
-                    preEvalQuestion={props.state.preEvalQuestion} 
-                    onPreEvaluationSubmitButtonClick= {onPreEvaluationSubmitButtonClick}
-                    onPreEvalChange={onPreEvalChange}/>
+                    props.userState.isPreEvalClicked && !props.userState.isPreEvalCompleted &&
+                    <Evaluation
+                        evalQuestions={props.userState.evalQuestions}
+                        onEvaluationSubmit={onPreEvaluationSubmitButtonClick}
+                        onEvalChange={onEvalChange}
+                        type={PRE_TYPE} />
                 }
                 {
-                    props.state.isPostEvalClicked &&
-                    <PostEvaluation postEvalQuestion={props.state.postEvalQuestion} onPostEvaluationSubmitButtonClick={onPostEvaluationSubmitButtonClick} />
+                    props.userState.isPostEvalClicked && !props.userState.isPostEvalCompleted &&
+                    <Evaluation
+                        evalQuestions={props.userState.evalQuestions}
+                        onEvaluationSubmit={onPostEvaluationSubmitButtonClick}
+                        onEvalChange={onEvalChange}
+                        type={POST_TYPE} />
                 }
             </div>
         </div>
@@ -86,7 +96,7 @@ export default function Welcome(props) {
 
 const mapStateToProps = (state) => {
     return {
-        state: state
+        userState: state.reducer,
     }
 }
 

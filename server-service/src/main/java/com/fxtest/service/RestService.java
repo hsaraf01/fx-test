@@ -22,6 +22,9 @@ public class RestService {
     @Autowired
     private QuestionStore questionStore;
 
+    @Autowired
+    private SSEEmitterService emitterService;
+
     public List<User> getAllUsers() {
         return userStore.getAllUser();
     }
@@ -60,5 +63,9 @@ public class RestService {
 
     private String getId() {
         return UUID.randomUUID().toString();
+    }
+
+    public void userLoggedIn(User user) {
+        emitterService.emitUserLoggedInEvent(user);
     }
 }

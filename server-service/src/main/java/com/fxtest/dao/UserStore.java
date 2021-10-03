@@ -19,5 +19,8 @@ public class UserStore {
       return new ArrayList<>(userList);
     }
 
+    public User findUser(String userId) {
+        return userList.stream().filter(user -> user.getId().equalsIgnoreCase(userId)).findAny().get();
+    }
 
 }

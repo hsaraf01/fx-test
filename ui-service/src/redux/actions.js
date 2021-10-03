@@ -1,56 +1,57 @@
+import { EVAL_QUESTIONS, POPULATE_TITLE, POPULATE_USERS, POST_EVAL_CLICKED, POST_EVAL_COMPLETED, POST_EVAL_SCORE, PRE_EVAL_CLICKED, PRE_EVAL_COMPLETED, PRE_EVAL_SCORE, SELECTED_USER, USER_LOGGED_IN } from "./constants"
 
-export const preEvalClicked = (isClicked) => {
-    return {
-        type:"PRE_EVAL_CLICKED",
-        payload: isClicked
-    }
-}
+export const preEvalClicked = (payload) => ({
+    type: PRE_EVAL_CLICKED,
+    payload
+})
 
-export const postEvalClicked = (isClicked) => {
-    return {
-        type:"POST_EVAL_CLICKED",
-        payload: isClicked
-    }
-}
+export const postEvalClicked = (payload) => ({
+    type: POST_EVAL_CLICKED,
+    payload
+})
 
-export const preEvalQuestions = (questions) => {
-    return {
-        type:"PRE_EVAL_QUESTIONS",
-        payload: questions
-    }
-}
+export const evalQuestions = (payload) => ({
+    type: EVAL_QUESTIONS,
+    payload
+})
 
-export const postEvalQuestions = (questions) => {
-    return {
-        type:"POST_EVAL_QUESTIONS",
-        payload: questions
-    }
-}
 
-export const preEvalCompleted = (isCompleted) => {
-    return {
-        type:"PRE_EVAL_COMPLETED",
-        payload: isCompleted
-    }
-}
+export const preEvalCompleted = (payload) => ({
+    type: PRE_EVAL_COMPLETED,
+    payload
+})
 
-export const populateUsers = (users) => {
-    return {
-        type:"POPULATE_USERS",
-        payload: users
-    }
-}
+export const postEvalCompleted = (payload) => ({
+    type: POST_EVAL_COMPLETED,
+    payload
+})
 
-export const selectedUser = (userName) => {
-    return {
-        type:"SELECTED_USER",
-        payload: userName
-    }
-}
+export const populateUsers = (payload) => ({
+    type: POPULATE_USERS,
+    payload
+})
 
-export const populateTitle = (title) => {
-    return {
-        type:"POPULATE_TITLE",
-        payload: title
-    }
-}
+export const selectedUser = (payload) => ({
+    type: SELECTED_USER,
+    payload
+})
+
+export const populateTitle = (payload) => ({
+    type: POPULATE_TITLE,
+    payload
+})
+
+export const userLoggedIn = (payload) => ({
+    type: USER_LOGGED_IN,
+    payload
+})
+
+export const preEvalScore = (payload) => ({
+    type: PRE_EVAL_SCORE,
+    payload
+})
+
+export const postEvalScore = (payload) => ({
+    type: POST_EVAL_SCORE,
+    payload
+})

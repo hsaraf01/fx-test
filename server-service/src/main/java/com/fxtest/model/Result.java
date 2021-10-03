@@ -6,12 +6,14 @@ public class Result {
 
     private String userId;
     private Map<String, String> questionAnswerMap;
-    private long score;
+    private float score;
+    private EvalType type;
 
-    public Result(String userId, Map<String, String> questionAnswerMap, long score) {
+    public Result(String userId, EvalType type, Map<String, String> questionAnswerMap, float score) {
         this.userId = userId;
         this.questionAnswerMap = questionAnswerMap;
         this.score = score;
+        this.type = type;
     }
 
     public String getUserId() {
@@ -22,7 +24,12 @@ public class Result {
         return questionAnswerMap;
     }
 
-    public long getScore() {
+    public float getScore() {
         return score;
+    }
+
+    public static enum EvalType {
+        PRE,
+        POST
     }
 }

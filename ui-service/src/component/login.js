@@ -1,26 +1,29 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { fetchTitle, fetchUsers } from "../async";
+import { fetchTitle, fetchUsers, userLoggedInRequest } from "../service/async";
 import { selectedUser, populateUsers, populateTitle } from "../redux/actions";
 import LoginForm from "./loginForm";
-import {ConnectedWelcome} from "./welcome";
+import { ConnectedWelcome } from "./welcome";
 
 class Login extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
         this.props.dispatch(selectedUser(event.target[0].value))
+        setTimeout(() => {
+            console.log(this.props.userState.selectedUser)
+            userLoggedInRequest(this.props.userState.selectedUser);
+        }, 5)
+
     }
 
     componentDidMount() {
-        const titleResponse = fetchTitle();
-        const usersResponse = fetchUsers();
-        usersResponse.then(response => this.props.dispatch(populateUsers(response)))
-        titleResponse.then(response => this.props.dispatch(populateTitle(response)))
+        fetchUsers().then(response => this.props.dispatch(populateUsers(response)))
+        fetchTitle().then(response => this.props.dispatch(populateTitle(response)))
     }
 
     render() {
-        const userName = this.props.state.selectedUser.name;
+        const userName = this.props.userState.selectedUser.name;
         return (
             <>
                 <div className="container-fluid workspace">
@@ -29,7 +32,7 @@ class Login extends Component {
                         </div>
                         <div className="col-5">
                             {!userName &&
-                                <LoginForm onSubmit={this.onSubmit} options={this.props.state.users} />
+                                <LoginForm onSubmit={this.onSubmit} options={this.props.userState.users} />
                             }
                         </div>
                         <div className="col-4"></div>
@@ -47,7 +50,7 @@ class Login extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        state: state
+        userState: state.reducer,
     }
 }
 

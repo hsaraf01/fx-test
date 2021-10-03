@@ -24,25 +24,9 @@ public class RestController {
         return restService.getAllUsers();
     }
 
-    @GetMapping(value = "/addUser/{name}")
-    public User addUser(@PathVariable("name") String name) {
-        return restService.addUser(name);
-    }
-
     @GetMapping(value ="/preEvalQuestions")
     public List<Question> getPreEvalQuestions() {
         return restService.getPreEvalQuestions();
-    }
-
-    @GetMapping(value = "/addQuestion")
-    public Question addQuestion(@RequestParam String question,
-                                @RequestParam String option1,
-                                @RequestParam String option2,
-                                @RequestParam String option3,
-                                @RequestParam String option4,
-                                @RequestParam int answerOption
-                                ) {
-        return restService.addQuestion(question, option1, option2, option3, option4,answerOption);
     }
 
     @GetMapping(value = "/title")
@@ -50,15 +34,19 @@ public class RestController {
         return restService.getTitle();
     }
 
-    @GetMapping(value = "/addTitle")
-    public void addTitle(@RequestParam String title) {
-        restService.addTitle(title);
-    }
-
     @PostMapping(value = "/preEvalSubmission")
-    public void submission(@RequestBody Submission submission) {
-        resultService.addResult(submission);
+    public void preEvalSubmission(@RequestBody Submission submission) {
+        resultService.preEvalSubmission(submission);
+    }
+
+    @PostMapping(value = "/postEvalSubmission")
+    public void postEvalSubmission(@RequestBody Submission submission) {
+        resultService.postEvalSubmission(submission);
     }
 
 
+    @PostMapping(value = "/userLoggedIn")
+    public void userLoggedIn(@RequestBody User user) {
+        restService.userLoggedIn(user);
+    }
 }

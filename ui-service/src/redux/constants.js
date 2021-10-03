@@ -1,0 +1,15 @@
+export const USER_LOGGED_IN = "USER_LOGGED_IN";
+export const PRE_EVAL_SCORE = "PRE_EVAL_SCORE";
+export const POST_EVAL_SCORE = "POST_EVAL_SCORE";
+export const POPULATE_TITLE = "POPULATE_TITLE";
+export const SELECTED_USER = "SELECTED_USER";
+export const POPULATE_USERS = "POPULATE_USERS";
+export const PRE_EVAL_COMPLETED = "PRE_EVAL_COMPLETED";
+export const POST_EVAL_COMPLETED = "POST_EVAL_COMPLETED";
+export const EVAL_QUESTIONS = "EVAL_QUESTIONS";
+export const POST_EVAL_CLICKED = "POST_EVAL_CLICKED";
+export const PRE_EVAL_CLICKED = "PRE_EVAL_CLICKED";
+
+export const URL = "http://localhost:8080"
+export const PRE_TYPE="PRE_EVAL"
+export const POST_TYPE="POST_EVAL"

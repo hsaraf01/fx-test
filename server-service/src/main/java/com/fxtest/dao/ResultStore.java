@@ -3,16 +3,19 @@ package com.fxtest.dao;
 import com.fxtest.model.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ResultStore {
 
-    Map<String, Result> store = new ConcurrentHashMap<>();
+    Map<String, List<Result>> store = new ConcurrentHashMap<>();
 
     public void addResult(Result result) {
-        store.put(result.getUserId(), result);
+        List<Result> results = store.getOrDefault(result.getUserId(), new ArrayList<>());
+        results.add(result);
     }
 
 

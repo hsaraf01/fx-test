@@ -20,17 +20,38 @@ public class ResultService {
     @Autowired
     private QuestionStore questionStore;
 
+    @Autowired
+    private SSEEmitterService emitterService;
 
-    public void addResult(Submission submission) {
-        Map<String,String> answerSheet= questionStore.getAllQuestion()
-                    .stream()
-                    .collect(Collectors.toMap(Question::getId, Question::getAnswerId));
-        long score =submission.getQuestionAnswers().stream().filter(qa -> answerSheet.get(qa.getQuestionId()).equalsIgnoreCase(qa.getAnswerId())).count();
-        Map<String,String> submittedQA= submission.getQuestionAnswers()
+    public void preEvalSubmission(Submission submission) {
+        float scoreInPercent = getScoreInPercent(submission);
+        Map<String, String> submittedQA = getSubmittedQAInMap(submission);
+        Result result = new Result(submission.getUserId(), Result.EvalType.PRE, submittedQA, scoreInPercent);
+        resultStore.addResult(result);
+        emitterService.preEvalSubmitted(submission.getUserId(), scoreInPercent+"%");
+    }
+
+    public void postEvalSubmission(Submission submission) {
+        float scoreInPercent = getScoreInPercent(submission);
+        Map<String, String> submittedQA = getSubmittedQAInMap(submission);
+        Result result = new Result(submission.getUserId(), Result.EvalType.POST, submittedQA, scoreInPercent);
+        resultStore.addResult(result);
+        emitterService.postEvalSubmitted(submission.getUserId(), scoreInPercent+"%");
+    }
+
+    private Map<String, String> getSubmittedQAInMap(Submission submission) {
+        return submission.getQuestionAnswers()
                 .stream()
                 .collect(Collectors.toMap(Submission.QuestionAnswer::getQuestionId, Submission.QuestionAnswer::getAnswerId));
-        Result result = new Result(submission.getUserId(), submittedQA, score);
-        resultStore.addResult(result);
+    }
+
+    private float getScoreInPercent(Submission submission) {
+        Map<String, String> answerSheet = questionStore.getAllQuestion()
+                .stream()
+                .collect(Collectors.toMap(Question::getId, Question::getAnswerId));
+
+        long score = submission.getQuestionAnswers().stream().filter(qa -> answerSheet.get(qa.getQuestionId()).equalsIgnoreCase(qa.getAnswerId())).count();
+        return score*100/answerSheet.size();
     }
 
 }
