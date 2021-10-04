@@ -68,4 +68,5 @@ public class RestService {
     public void userLoggedIn(User user) {
         emitterService.emitUserLoggedInEvent(user);
     }
+
 }

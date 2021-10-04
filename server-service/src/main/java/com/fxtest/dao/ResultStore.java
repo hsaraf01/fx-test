@@ -3,21 +3,35 @@ package com.fxtest.dao;
 import com.fxtest.model.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ResultStore {
 
-    Map<String, List<Result>> store = new ConcurrentHashMap<>();
+    Map<String, Result> preEvalStore = new ConcurrentHashMap<>();
+    Map<String, Result> postEvalStore = new ConcurrentHashMap<>();
 
-    public void addResult(Result result) {
-        List<Result> results = store.getOrDefault(result.getUserId(), new ArrayList<>());
-        results.add(result);
+    public void addPreEvalResult(Result result) {
+        preEvalStore.put(result.getUserId(), result);
     }
 
+    public void addPostEvalResult(Result result) {
+        postEvalStore.put(result.getUserId(), result);
+    }
+
+    public Map<String, Result> getPreEvalResult() {
+        return preEvalStore;
+    }
+
+    public Map<String, Result> getPostEvalResult() {
+        return postEvalStore;
+    }
+
+    public void clearStore() {
+        preEvalStore.clear();
+        postEvalStore.clear();
+    }
 
 
 }

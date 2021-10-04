@@ -29,4 +29,9 @@ public class QuestionStore {
         return  this.title;
     }
 
+    public void clearStore() {
+        questionList.clear();
+        title=null;
+    }
+
 }
