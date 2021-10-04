@@ -1,13 +1,13 @@
 import { postEvalScore, preEvalScore, userLoggedIn } from '../redux/actions';
 import { URL } from '../redux/constants';
-import { store } from '../redux/store'
+import store from '../redux/store'
 
 export const connectServerAsync = () => {
-    var source = new EventSource(URL+'/stream-flux');
-    source.addEventListener('HEARTBEAT_EVENT', heartbeatEventHandler, false);  
-    source.addEventListener('USER_LOGGED_IN', userLoggedInEventHandler, false); 
-    source.addEventListener('PRE_EVAL_COMPLETED', preEvalCompletedEventHandler, false); 
-    source.addEventListener('POST_EVAL_COMPLETED', postEvalCompletedEventHandler, false);    
+    var source = new EventSource(URL + '/stream-flux');
+    source.addEventListener('HEARTBEAT_EVENT', heartbeatEventHandler, false);
+    source.addEventListener('USER_LOGGED_IN', userLoggedInEventHandler, false);
+    source.addEventListener('PRE_EVAL_COMPLETED', preEvalCompletedEventHandler, false);
+    source.addEventListener('POST_EVAL_COMPLETED', postEvalCompletedEventHandler, false);
 }
 
 export const heartbeatEventHandler = (event) => {
@@ -16,7 +16,7 @@ export const heartbeatEventHandler = (event) => {
 
 export const userLoggedInEventHandler = (event) => {
     console.log(event)
-    store.dispatch(userLoggedIn( JSON.parse(event.data)));
+    store.dispatch(userLoggedIn(JSON.parse(event.data)));
 }
 
 export const preEvalCompletedEventHandler = (event) => {

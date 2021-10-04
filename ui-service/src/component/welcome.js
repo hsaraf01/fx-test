@@ -33,11 +33,11 @@ export default function Welcome(props) {
     }
 
     const onEvalChange = (event) => {
-        event.preventDefault();
         const questionAnswer = {
             "questionId": event.target.name,
             "answerId": event.target.value
         }
+        evalQuestionAnswers = evalQuestionAnswers.filter(eqa => eqa.questionId !== questionAnswer.questionId);
         evalQuestionAnswers = [
             ...evalQuestionAnswers,
             questionAnswer

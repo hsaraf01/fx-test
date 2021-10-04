@@ -16,7 +16,7 @@ class App extends Component {
         </div>
         <div className="row p-2">
           <Switch>
-            <Route exact path="/admin" component={ConnectedAdmin} />
+            <Route exact path="/fx-admin-gui" component={ConnectedAdmin} />
             <Route path="/" component={ConnectedLogin} />
           </Switch>
         </div>
