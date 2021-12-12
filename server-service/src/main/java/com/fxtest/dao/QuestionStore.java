@@ -6,32 +6,27 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class QuestionStore {
 
-    private List<Question> questionList = new ArrayList<>();
-    private String title;
+    private Map<String, List<Question>> store = new ConcurrentHashMap<>();
 
-    public void addQuestion(Question question) {
-        questionList.add(question);
+    public void addQuestion(String titleId, Question question) {
+     List<Question> questionList  = store.getOrDefault(titleId, new ArrayList<>());
+     questionList.add(question);
+     store.put(titleId, questionList);
     }
 
-    public List<Question> getAllQuestion() {
+    public List<Question> getQuestionSet(String titleId) {
+        List<Question> questionList = store.getOrDefault(titleId, new ArrayList<>());
         return new ArrayList<>(questionList);
     }
 
-    public void addTitle(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return  this.title;
-    }
-
     public void clearStore() {
-        questionList.clear();
-        title=null;
+        store.clear();
     }
 
 }

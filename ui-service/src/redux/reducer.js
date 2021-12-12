@@ -1,4 +1,4 @@
-import { EVAL_QUESTIONS, POPULATE_TITLE, POPULATE_USERS, POST_EVAL_CLICKED, POST_EVAL_COMPLETED, PRE_EVAL_CLICKED, PRE_EVAL_COMPLETED, SELECTED_ADMIN_USER, SELECTED_USER } from "./constants";
+import { ACTIVE_EVALUATION, EVAL_QUESTIONS, POPULATE_TITLE, POPULATE_TITLES, POPULATE_USERS, POST_EVAL_CLICKED, POST_EVAL_COMPLETED, PRE_EVAL_CLICKED, PRE_EVAL_COMPLETED, SELECTED_ADMIN_USER, SELECTED_USER } from "./constants";
 
 const initialState = {
     isPreEvalClicked: false,
@@ -8,7 +8,9 @@ const initialState = {
     evalQuestions: [],
     users: [],
     selectedUser: {},
-    title: ""
+    title: "",
+    titles: [],
+    activeEvaluation: ""
 }
 
 export const reducer = (state = initialState, action) => {
@@ -33,6 +35,10 @@ export const reducer = (state = initialState, action) => {
             return { ...state, selectedUser: selectedUser }
         case SELECTED_ADMIN_USER:
             return { ...state, selectedUser: action.payload }
+        case POPULATE_TITLES:
+            return { ...state, titles: action.payload } 
+        case ACTIVE_EVALUATION:
+            return { ...state, activeEvaluation: action.payload } 
         default:
             return state;
     }

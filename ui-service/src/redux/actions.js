@@ -1,4 +1,4 @@
-import { EVAL_QUESTIONS, POPULATE_TITLE, POPULATE_USERS, POST_EVAL_CLICKED, POST_EVAL_COMPLETED, POST_EVAL_SCORE, PRE_EVAL_CLICKED, PRE_EVAL_COMPLETED, PRE_EVAL_SCORE, SELECTED_ADMIN_USER, SELECTED_USER, USER_LOGGED_IN } from "./constants"
+import { ACTIVE_EVALUATION, EVAL_QUESTIONS, POPULATE_TITLE, POPULATE_TITLES, POPULATE_USERS, POST_EVAL_CLICKED, POST_EVAL_COMPLETED, POST_EVAL_SCORE, PRE_EVAL_CLICKED, PRE_EVAL_COMPLETED, PRE_EVAL_SCORE, SELECTED_ADMIN_USER, SELECTED_USER, USER_LOGGED_IN } from "./constants"
 
 export const preEvalClicked = (payload) => ({
     type: PRE_EVAL_CLICKED,
@@ -60,4 +60,16 @@ export const selectedAdminUser = (payload) => ({
     type: SELECTED_ADMIN_USER,
     payload
 })
+
+
+export const populateTitles = (payload) => ({
+    type: POPULATE_TITLES,
+    payload
+})
+
+export const setActiveEvaluation = (payload) => ({
+    type: ACTIVE_EVALUATION,
+    payload
+})
+
 

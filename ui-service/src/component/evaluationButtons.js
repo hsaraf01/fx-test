@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Button, Form } from "react-bootstrap";
+import { PostEvaluation, PreEvaluation } from "../redux/constants";
 
 export default function EvaluationButtons(props) {
 
@@ -9,7 +10,7 @@ export default function EvaluationButtons(props) {
                 <Form.Group>
                     <Button className="pl-5 pr-5" variant="primary" type="submit"
                         onClick={props.onPreEvaluationButtonClick}
-                        disabled={props.isPreEvalCompleted}
+                        disabled={props.isPreEvalCompleted || props.activeEvaluation === PostEvaluation}
                     >
                         Pre-Evaluation
                     </Button>
@@ -17,7 +18,7 @@ export default function EvaluationButtons(props) {
                 <Form.Group>
                     <Button className="pl-5 pr-5" variant="primary" type="submit"
                         onClick={props.onPostEvaluationButtonClick}
-                        disabled={props.isPostEvalCompleted}
+                        disabled={props.isPostEvalCompleted  || props.activeEvaluation === PreEvaluation}
                     >
                         Post-Evaluation
                     </Button>

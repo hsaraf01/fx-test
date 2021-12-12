@@ -1,6 +1,8 @@
 package com.fxtest.controller;
 
 import com.fxtest.model.Question;
+import com.fxtest.model.Submission;
+import com.fxtest.model.Title;
 import com.fxtest.model.User;
 import com.fxtest.service.RestService;
 import com.fxtest.service.ResultService;
@@ -20,6 +22,7 @@ import reactor.core.publisher.Flux;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 @RestController
 public class AdminController {
@@ -40,19 +43,27 @@ public class AdminController {
     }
 
     @GetMapping(value = "/addTitle")
-    public void addTitle(@RequestParam String title) {
-        restService.addTitle(title);
+    public String addTitle(@RequestParam String title) throws IOException {
+        return restService.addTitle(title);
     }
 
+    @GetMapping(value = "/allTitles")
+    public List<Title> getAllTitles() {
+        return restService.getTitleList();
+    }
+
+
     @GetMapping(value = "/addQuestion")
-    public Question addQuestion(@ApiParam(name = "newQuestion",required = true) @RequestParam String newQuestion,
+    public Question addQuestion(
+                                @ApiParam(name = "titleId",required = true) @RequestParam String titleId,
+                                @ApiParam(name = "newQuestion",required = true) @RequestParam String newQuestion,
                                 @ApiParam(name = "option1",required = true) @RequestParam String option1,
                                 @ApiParam(name = "option2",required = true) @RequestParam String option2,
                                 @ApiParam(name = "option3",required = true) @RequestParam String option3,
                                 @ApiParam(name = "option4",required = true) @RequestParam String option4,
                                 @ApiParam(name = "rightAnswerOption",required = true) @RequestParam Integer rightAnswerOption
-    ) {
-        return restService.addQuestion(newQuestion, option1, option2, option3, option4, rightAnswerOption);
+    ) throws IOException {
+        return restService.addQuestion(titleId, newQuestion, option1, option2, option3, option4, rightAnswerOption);
     }
 
     @GetMapping(value = "/addUser/{name}")
@@ -75,6 +86,27 @@ public class AdminController {
         return prepareFileDownloadResponse(resultService.preparePostEvalResultExcel(),"postEvaluation.xlsx");
 
     }
+
+    @PostMapping(value = "/setActiveTitle")
+    public void setActiveTitle(@RequestBody Title title) {
+        restService.setActiveTitle(title);
+    }
+
+    @PostMapping(value = "/setActiveEvaluation")
+    public void setActiveEvaluation(@RequestBody String activeEvaluation) {
+        restService.setActiveEvaluation(activeEvaluation.replace("=",""));
+    }
+
+    @GetMapping(value = "/activeEvaluation")
+    public String getActiveEvaluation() {
+        return restService.getActiveEvaluation();
+    }
+
+    @GetMapping(value = "/activeTitle")
+    public String getActiveTitleId() {
+        return restService.getActiveTitleId();
+    }
+
 
     private ResponseEntity<Resource> prepareFileDownloadResponse(ByteArrayInputStream byteArrayInputStream, String fileName) {
         InputStreamResource file = new InputStreamResource(byteArrayInputStream);

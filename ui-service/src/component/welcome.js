@@ -46,13 +46,11 @@ export default function Welcome(props) {
 
     const onPostEvaluationSubmitButtonClick = (event) => {
         event.preventDefault();
-        debugger;
         const submission = {
             "userId": props.userState.selectedUser.id,
             "questionAnswers": evalQuestionAnswers
         }
         submitPostEval(submission).then(response => {
-            debugger;
             props.dispatch(postEvalCompleted(true))
         }
         )
@@ -68,6 +66,7 @@ export default function Welcome(props) {
                             onPostEvaluationButtonClick={onPostEvaluationButtonClick}
                             isPreEvalCompleted={props.userState.isPreEvalCompleted}
                             isPostEvalCompleted={props.userState.isPostEvalCompleted}
+                            activeEvaluation={props.userState.activeEvaluation}
                         />
                     </div>
                 </div>

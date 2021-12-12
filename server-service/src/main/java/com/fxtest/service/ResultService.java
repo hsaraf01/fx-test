@@ -2,6 +2,7 @@ package com.fxtest.service;
 
 import com.fxtest.dao.QuestionStore;
 import com.fxtest.dao.ResultStore;
+import com.fxtest.dao.TitleStore;
 import com.fxtest.dao.UserStore;
 import com.fxtest.model.Option;
 import com.fxtest.model.Question;
@@ -38,6 +39,9 @@ public class ResultService {
     @Autowired
     private SSEEmitterService emitterService;
 
+    @Autowired
+    private TitleStore titleStore;
+
     public void preEvalSubmission(Submission submission) {
         float scoreInPercent = getScoreInPercent(submission);
         Map<String, String> submittedQA = getSubmittedQAInMap(submission);
@@ -55,7 +59,6 @@ public class ResultService {
     }
 
     public void clearCache() {
-        questionStore.clearStore();
         resultStore.clearStore();
     }
 
@@ -66,7 +69,8 @@ public class ResultService {
     }
 
     private float getScoreInPercent(Submission submission) {
-        Map<String, String> answerSheet = questionStore.getAllQuestion()
+        final String activeTitle= titleStore.getActiveTitleId();
+        Map<String, String> answerSheet = questionStore.getQuestionSet(activeTitle)
                 .stream()
                 .collect(Collectors.toMap(Question::getId, Question::getAnswerId));
 
@@ -85,9 +89,10 @@ public class ResultService {
     }
 
     private ByteArrayInputStream generateExcel(String sheetName, Map<String, Result> userEvalResultMap) throws IOException {
-        Map<String, String> questions = questionStore.getAllQuestion().stream()
+        final String activeTitle= titleStore.getActiveTitleId();
+        Map<String, String> questions = questionStore.getQuestionSet(activeTitle).stream()
                 .collect(Collectors.toMap(Question::getId, Question::getQuestion));
-        Map<String, String> answers = questionStore.getAllQuestion().stream()
+        Map<String, String> answers = questionStore.getQuestionSet(activeTitle).stream()
                 .map(Question::getOptions)
                 .flatMap(List::stream)
                 .collect(Collectors.toMap(Option::getId, Option::getOption));

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { fetchTitle, fetchUsers, userLoggedInRequest } from "../service/async";
-import { selectedUser, populateUsers, populateTitle } from "../redux/actions";
+import { fetchActiveEvaluation, fetchTitle, fetchUsers, userLoggedInRequest } from "../service/async";
+import { selectedUser, populateUsers, populateTitle, setActiveEvaluation } from "../redux/actions";
 import LoginForm from "./loginForm";
 import { ConnectedWelcome } from "./welcome";
 
@@ -19,6 +19,7 @@ class Login extends Component {
     componentDidMount() {
         fetchUsers().then(response => this.props.dispatch(populateUsers(response)))
         fetchTitle().then(response => this.props.dispatch(populateTitle(response)))
+        fetchActiveEvaluation().then(response => this.props.dispatch(setActiveEvaluation(response)))
     }
 
     render() {

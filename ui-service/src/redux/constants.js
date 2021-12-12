@@ -10,6 +10,10 @@ export const EVAL_QUESTIONS = "EVAL_QUESTIONS";
 export const POST_EVAL_CLICKED = "POST_EVAL_CLICKED";
 export const PRE_EVAL_CLICKED = "PRE_EVAL_CLICKED";
 export const SELECTED_ADMIN_USER = "SELECTED_ADMIN_USER";
+export const POPULATE_TITLES = "POPULATE_TITLES";
+export const ACTIVE_EVALUATION = "ACTIVE_EVALUATION";
+export const PreEvaluation = "PreEvaluation";
+export const PostEvaluation = "PostEvaluation";
 
 export const URL = "http://localhost:8080"
 export const PRE_TYPE="PRE_EVAL"
